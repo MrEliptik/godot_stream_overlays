@@ -24,6 +24,14 @@ Using the microphone (or any other audio stream) display a spectrum analyzer (fr
 
 ![spectrum analyzer](medias_examples/spectrum_analyzer.gif)
 
+## HOW TO USE
+
+Each project is using a transparent window, so you can set it to the size you want and capture it with your streaming software. 
+
+- For example with OBS, just setup a "Game Capture" source, and check "Allow Transparency" and voilà!
+
+*TODO: Add specific directions for each projects* 
+
 ## HOW TO CONTRIBUTE
 
 If you want to contribute, please open an issue before, or join my [Discord](https://discord.gg/83nFRPTP6t) to discuss it! 
