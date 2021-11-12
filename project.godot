@@ -44,7 +44,7 @@ _global_script_class_icons={
 
 [application]
 
-config/name="godot_twitch_overlay"
+config/name="godot_stream_overlays"
 run/main_scene="res://scenes/characters_overlay/game.tscn"
 config/icon="res://icon.png"
 
