@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://scripts/tests/test_chat.gd" type="Script" id=1]
 [ext_resource path="res://addons/gift/gift_node.gd" type="Script" id=2]
+[ext_resource path="res://scenes/chatConnection.tscn" type="PackedScene" id=3]
 
 [node name="TestChat" type="Control"]
 anchor_right = 1.0
@@ -26,35 +27,10 @@ __meta__ = {
 
 [node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer"]
 
-[node name="ConnectBtn" type="Button" parent="."]
-margin_left = 158.0
-margin_top = 256.0
-margin_right = 499.0
-margin_bottom = 339.0
-text = "CONNECT"
-
-[node name="NickLine" type="LineEdit" parent="."]
-margin_left = 165.0
-margin_top = 109.0
-margin_right = 488.0
-margin_bottom = 166.0
-text = "eliptikbot"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="AuthLine" type="LineEdit" parent="."]
-margin_left = 167.0
-margin_top = 180.0
-margin_right = 490.0
-margin_bottom = 237.0
-secret = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [node name="Gift" type="Node" parent="."]
 script = ExtResource( 2 )
 
-[connection signal="pressed" from="ConnectBtn" to="." method="_on_ConnectBtn_pressed"]
+[node name="ChatConnection" parent="." instance=ExtResource( 3 )]
+
 [connection signal="chat_message" from="Gift" to="." method="_on_Gift_chat_message"]
+[connection signal="connect_pressed" from="ChatConnection" to="." method="_on_ChatConnection_connect_pressed"]
