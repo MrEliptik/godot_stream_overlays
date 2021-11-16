@@ -65,7 +65,11 @@ window/stretch/aspect="keep"
 
 [editor_plugins]
 
-enabled=PoolStringArray( "res://addons/gift/plugin.cfg" )
+enabled=PoolStringArray( "res://addons/gift/plugin.cfg", "res://addons/ridiculous_coding/plugin.cfg" )
+
+[gui]
+
+theme/custom="res://visuals/base_theme.tres"
 
 [physics]
 
