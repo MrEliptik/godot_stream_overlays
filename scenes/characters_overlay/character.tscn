@@ -1,6 +1,7 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://scripts/characters_overlay/character.gd" type="Script" id=1]
+[ext_resource path="res://visuals/base_theme.tres" type="Theme" id=2]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 24.0
@@ -66,11 +67,12 @@ rotation = -0.127409
 polygon = PoolVector2Array( -24, -24, -7.6245, -24, -8, -32, -16, -32, -24, -64, 24, -64, 16, -32, 8, -32, 8, -24, 24, -24, 24, 24, -24, 24 )
 
 [node name="Username" type="Label" parent="."]
-margin_left = -34.0
-margin_top = -85.0
-margin_right = 36.0
-margin_bottom = -71.0
+margin_left = -65.0
+margin_top = -97.0
+margin_right = 67.0
+margin_bottom = -69.0
 grow_horizontal = 2
+theme = ExtResource( 2 )
 text = "USERNAME"
 align = 1
 valign = 1

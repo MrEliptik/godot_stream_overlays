@@ -3,6 +3,7 @@ extends KinematicBody2D
 var gravity := 200.0
 var speed = 1500.0
 var velocity := Vector2.ZERO
+var username: String = ""
 
 enum direction {
 	RIGHT,
@@ -26,6 +27,7 @@ func set_random_color():
 
 func set_username(username):
 	$Username.text = username
+	self.username = username
 
 func _on_Timer_timeout() -> void:
 	$Timer.start(rand_range(4, 10))
