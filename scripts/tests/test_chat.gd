@@ -1,8 +1,6 @@
 extends Control
 
 var chat = null
-onready var nick_line = $NickLine
-onready var auth_line = $AuthLine
 
 onready var gift = $Gift
 
