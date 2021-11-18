@@ -52,8 +52,8 @@ Developped by me MrEliptik!
 
 ### CONTRIBUTORS
 
-<a href="https://github.com/mreliptik/godot_stream_overlays/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=mreliptik/godot_stream_overlays" />
+<a href="https://github.com/MrEliptik/godot_stream_overlays/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=MrEliptik/godot_stream_overlays" />
 </a>
 
 Made with [contrib.rocks](https://contrib.rocks).
