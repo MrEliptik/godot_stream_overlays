@@ -50,7 +50,14 @@ Developped by me MrEliptik!
 - [YouTube](https://www.youtube.com/c/MrEliptik)
 - [Discord](https://discord.gg/83nFRPTP6t)
 
+### CONTRIBUTORS
 
-#### ADDONS
+<a href="https://github.com/mreliptik/godot_stream_overlays/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=mreliptik/godot_stream_overlays" />
+</a>
+
+Made with [contrib.rocks](https://contrib.rocks).
+
+### ADDONS
 
 - [GIFT](https://github.com/MennoMax/gift) - Twitch chat API addon
