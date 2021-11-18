@@ -61,3 +61,4 @@ Made with [contrib.rocks](https://contrib.rocks).
 ### ADDONS
 
 - [GIFT](https://github.com/MennoMax/gift) - Twitch chat API addon
+- [Ridiculous Coding](https://github.com/jotson/ridiculous_coding) - Ridiculous addon for Godot Engine that adds screenshake and explosions to your coding experience
