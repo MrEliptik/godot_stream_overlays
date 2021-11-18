@@ -24,6 +24,7 @@ __meta__ = {
 connect_btn = NodePath("MarginContainer/VBoxContainer/ConnectBtn")
 connect_cred_btn = NodePath("MarginContainer/VBoxContainer/ConnectCredBtn")
 connect_cred_del_btn = NodePath("MarginContainer/VBoxContainer/ConnectDeleteCredBtn")
+save_session = NodePath("MarginContainer/VBoxContainer/SaveSession")
 save_check = NodePath("MarginContainer/VBoxContainer/SaveCheck")
 nick_line = NodePath("MarginContainer/VBoxContainer/NickLine")
 oauth = NodePath("MarginContainer/VBoxContainer/AuthLine")
@@ -101,26 +102,34 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="SaveCheck" type="CheckBox" parent="MarginContainer/VBoxContainer"]
+[node name="SaveSession" type="CheckBox" parent="MarginContainer/VBoxContainer"]
 margin_top = 195.0
 margin_right = 446.0
 margin_bottom = 226.0
+custom_fonts/font = SubResource( 2 )
+pressed = true
+text = "Save current username ?"
+
+[node name="SaveCheck" type="CheckBox" parent="MarginContainer/VBoxContainer"]
+margin_top = 230.0
+margin_right = 446.0
+margin_bottom = 261.0
 focus_mode = 0
 custom_fonts/font = SubResource( 2 )
 pressed = true
 text = "Save encrypted credentials ?"
 
 [node name="VSeparator" type="VSeparator" parent="MarginContainer/VBoxContainer"]
-margin_top = 230.0
+margin_top = 265.0
 margin_right = 446.0
-margin_bottom = 280.0
+margin_bottom = 315.0
 rect_min_size = Vector2( 0, 50 )
 custom_styles/separator = SubResource( 1 )
 
 [node name="ConnectBtn" type="Button" parent="MarginContainer/VBoxContainer"]
-margin_top = 284.0
+margin_top = 319.0
 margin_right = 446.0
-margin_bottom = 318.0
+margin_bottom = 353.0
 focus_mode = 0
 theme = ExtResource( 1 )
 disabled = true
@@ -130,11 +139,12 @@ __meta__ = {
 }
 
 [node name="ConnectCredBtn" type="Button" parent="MarginContainer/VBoxContainer"]
-margin_top = 322.0
+margin_top = 357.0
 margin_right = 446.0
-margin_bottom = 356.0
+margin_bottom = 391.0
 focus_mode = 0
 theme = ExtResource( 1 )
+disabled = true
 text = "CONNECT WITH CREDENTIALS"
 __meta__ = {
 "_edit_use_anchors_": false
