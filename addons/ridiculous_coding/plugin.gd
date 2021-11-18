@@ -1,6 +1,8 @@
 tool
 extends EditorPlugin
 
+export var editor_button_scene: PackedScene = preload("res://addons/ridiculous_coding/editor_button.tscn")
+
 var shake = 0.0
 var shake_intensity = 0.0
 var timer = 0.0
@@ -23,9 +25,9 @@ var btn
 var id = null
 
 func _enter_tree():
-	btn = Button.new()
-	btn.text = "CONNECT"
-	add_control_to_dock(DOCK_SLOT_LEFT_UL, btn)
+	
+	btn = editor_button_scene.instance()
+	add_control_to_container(CONTAINER_TOOLBAR, btn)
 	
 	var editor = get_editor_interface()
 	var script_editor = editor.get_script_editor()
@@ -36,12 +38,12 @@ func _enter_tree():
 func _exit_tree():
 	# Clean-up of the plugin goes here.
 	# Remove the dock.
-	remove_control_from_docks(btn)
+	remove_control_from_container(CONTAINER_TOOLBAR, btn)
 	# Erase the control from the memory.
 	btn.free()
 	
 func _ready():
-	print(btn.connect("pressed", self, "on_server_connect_pressed"))
+	print(btn.connect("button_pressed", self, "on_server_connect_pressed"))
 
 var editors = {}
 func get_all_text_editors(parent : Node):
@@ -240,6 +242,8 @@ func on_server_connect_pressed():
 	if err != OK:
 		print("Unable to start server")
 		set_process(false)
+		btn.set_status(btn.STATUS.DISCONNETED)
+	btn.set_status(btn.STATUS.CONNECTED)
 
 func _connected(id, proto):
 	# This is called when a new peer connects, "id" will be the assigned peer id,
