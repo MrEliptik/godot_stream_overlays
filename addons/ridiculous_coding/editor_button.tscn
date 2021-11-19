@@ -1,0 +1,31 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://addons/ridiculous_coding/editor_button.gd" type="Script" id=2]
+[ext_resource path="res://visuals/fonts/FiraCode-Regular.ttf" type="DynamicFontData" id=3]
+
+[sub_resource type="DynamicFont" id=2]
+use_filter = true
+font_data = ExtResource( 3 )
+
+[sub_resource type="StyleBoxFlat" id=4]
+bg_color = Color( 0.0470588, 0.0588235, 0.0666667, 1 )
+
+[sub_resource type="StyleBoxFlat" id=3]
+bg_color = Color( 0.87451, 0.207843, 0.207843, 1 )
+
+[node name="ServerBtn" type="Button"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = -1838.0
+margin_bottom = -1054.0
+rect_min_size = Vector2( 120, 30 )
+custom_fonts/font = SubResource( 2 )
+custom_styles/hover = SubResource( 4 )
+custom_styles/normal = SubResource( 3 )
+text = "LISTEN"
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+connected_color = Color( 0.101961, 0.227451, 0.466667, 1 )
+disconnected_color = Color( 0.87451, 0.207843, 0.207843, 1 )

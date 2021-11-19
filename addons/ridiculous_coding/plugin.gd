@@ -1,6 +1,8 @@
 tool
 extends EditorPlugin
 
+export var editor_button_scene: PackedScene = preload("res://addons/ridiculous_coding/editor_button.tscn")
+
 var shake = 0.0
 var shake_intensity = 0.0
 var timer = 0.0
@@ -12,36 +14,40 @@ const Boom = preload("boom.tscn")
 const Blip = preload("blip.tscn")
 const Newline = preload("newline.tscn")
 
+enum EFFECT_TYPE {
+	SHAKE,
+	TYPING,
+	NEW_LINE,
+	BOOM
+}
 
 ##### WEBSOCKET STUFF
 # The port we will listen to
 const PORT = 9080
 # Our WebSocketServer instance
-var server = WebSocketServer.new()
+var server: WebSocketServer = WebSocketServer.new()
 
-var btn
+var btn = null
 var id = null
 
 func _enter_tree():
-	btn = Button.new()
-	btn.text = "CONNECT"
-	add_control_to_dock(DOCK_SLOT_LEFT_UL, btn)
+	btn = editor_button_scene.instance()
+	add_control_to_container(CONTAINER_TOOLBAR, btn)
+	if btn.connect("pressed", self, "on_server_connect_pressed") != OK:
+		print("ERROR CONNECTING BUTTON")
 	
 	var editor = get_editor_interface()
 	var script_editor = editor.get_script_editor()
 	script_editor.connect("editor_script_changed", self, "editor_script_changed")
-
 	start_wss_server()
 
 func _exit_tree():
+	print("exit tree")
 	# Clean-up of the plugin goes here.
 	# Remove the dock.
-	remove_control_from_docks(btn)
+	remove_control_from_container(CONTAINER_TOOLBAR, btn)
 	# Erase the control from the memory.
 	btn.free()
-	
-func _ready():
-	print(btn.connect("pressed", self, "on_server_connect_pressed"))
 
 var editors = {}
 func get_all_text_editors(parent : Node):
@@ -84,11 +90,10 @@ func _process(delta):
 	var editor = get_editor_interface()
 	
 #	print(server.is_listening())
-#	print(server.has_peer(0))
-	
 	# Call this in _process or _physics_process.
 	# Data transfer, and signals emission will only happen when calling this function.
-	server.poll()
+	if server.is_listening():
+		server.poll()
 	
 #	if shake > 0:
 #		shake -= delta
@@ -167,7 +172,8 @@ func text_changed(textedit : TextEdit):
 	# Compute caret position
 	var pos = Vector2()
 	pos.x = (column) * (fontsize.x) - hscroll + 100
-	pos.y = (line-vscroll) * (fontsize.y+line_spacing-2) + 16
+#	pos.y = (line-vscroll) * (fontsize.y+line_spacing-2) + 16
+	pos.y = (line+1-vscroll) * (fontsize.y+line_spacing-2) + 16
 
 	if editors.has(textedit):
 		# Deleting
@@ -175,11 +181,14 @@ func text_changed(textedit : TextEdit):
 			timer = 0.0
 			
 			# Draw the thing
-			var thing = Boom.instance()
-			thing.position = pos
-			thing.destroy = true
-			thing.last_key = last_key
-			textedit.add_child(thing)
+#			var thing = Boom.instance()
+#			thing.position = pos
+#			thing.destroy = true
+#			thing.last_key = last_key
+#			textedit.add_child(thing)
+
+			var data = {"type":var2str(EFFECT_TYPE.BOOM), "pos": var2str(pos+textedit.rect_global_position), "last_key": last_key}
+			send(id, JSON.print(data))
 			
 			# Shake
 			shake(0.2, 10)
@@ -188,7 +197,7 @@ func text_changed(textedit : TextEdit):
 		if timer > 0.02 and len(textedit.text) >= len(editors[textedit]["text"]):
 			timer = 0.0
 			
-			var data = {"pos": var2str(pos), "last_key": last_key}
+			var data = {"type":var2str(EFFECT_TYPE.TYPING), "pos": var2str(pos+textedit.rect_global_position), "last_key": last_key}
 			send(id, JSON.print(data))
 
 			# Draw the thing
@@ -205,11 +214,13 @@ func text_changed(textedit : TextEdit):
 			
 		# Newline
 		if textedit.cursor_get_line() != editors[textedit]["line"]:
-			# Draw the thing
-			var thing = Newline.instance()
-			thing.position = pos
-			thing.destroy = true
-			textedit.add_child(thing)
+			var data = {"type":var2str(EFFECT_TYPE.NEW_LINE), "pos": var2str(pos+textedit.rect_global_position)}
+			send(id, JSON.print(data))
+#			# Draw the thing
+#			var thing = Newline.instance()
+#			thing.position = pos
+#			thing.destroy = true
+#			textedit.add_child(thing)
 			
 			# Shake
 			shake(0.05, 5)
@@ -231,15 +242,23 @@ func start_wss_server():
 	server.connect("data_received", self, "_on_data")
 
 func send(id, data):
+#	if !id: return
+	if !server.has_peer(id): return
 	server.get_peer(id).put_packet(data.to_utf8())
 	
 func on_server_connect_pressed():
-	print("CONNECTING")
+	if server.is_listening():
+		server.stop()
+		btn.set_connection_status(btn.STATUS.DISCONNECTED)
+		return
+		
 	# Start listening on the given port.
 	var err = server.listen(PORT)
 	if err != OK:
 		print("Unable to start server")
 		set_process(false)
+		btn.set_connection_status(btn.STATUS.DISCONNETED)
+	btn.set_connection_status(btn.STATUS.CONNECTED)
 
 func _connected(id, proto):
 	# This is called when a new peer connects, "id" will be the assigned peer id,
