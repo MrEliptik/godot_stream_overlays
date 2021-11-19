@@ -33,17 +33,17 @@ shape = SubResource( 1 )
 disabled = true
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2( -960, 0 )
+position = Vector2( -960, -464 )
 rotation = 1.5708
 shape = SubResource( 1 )
 
 [node name="CollisionShape2D3" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2( 960, 0 )
+position = Vector2( 960, -464 )
 rotation = 1.5708
 shape = SubResource( 1 )
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
-polygon = PoolVector2Array( -959, -10, -960, 9, 959, 10, 960, -10, 752, -5, 600, -26, 516, -2, 425, -6, 370, -19, 219, -4, 81, -25, -21, 1, -215, -6, -340, -17, -448, -1, -558, -11, -677, -2, -717, -12, -779, -4, -806, -22, -857, -10, -892, -36 )
+polygon = PoolVector2Array( -962, -139, -960, 9, 959, 10, 960, -10, 956, -181, 920, -38, 752, -5, 610, -21, 516, -2, 425, -6, 370, -19, 219, -4, 81, -25, -21, 1, -215, -6, -340, -17, -448, -1, -558, -11, -677, -2, -717, -12, -779, -4, -802, -16, -857, -10, -930, -22 )
 
 [node name="HTTPRequest" type="HTTPRequest" parent="."]
 
@@ -62,10 +62,10 @@ polygon = PoolVector2Array( -1, 685, 136, 682, 114, 736, 4, 741 )
 polygon = PoolVector2Array( -1, 685, 135, 682, 114, 736, 4, 741 )
 
 [node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="StaticBody2D2"]
-polygon = PoolVector2Array( 1767, 783, 1918, 783, 1921, 832, 1827, 821 )
+polygon = PoolVector2Array( 1749, 685, 1920, 685, 1921, 759 )
 
 [node name="Polygon2D2" type="Polygon2D" parent="StaticBody2D2"]
-polygon = PoolVector2Array( 1766, 783, 1918, 783, 1921, 832, 1828, 821 )
+polygon = PoolVector2Array( 1748, 685, 1919, 685, 1921, 760 )
 
 [connection signal="chat_message" from="Gift" to="." method="_on_Gift_chat_message"]
 [connection signal="whisper_message" from="Gift" to="." method="_on_Gift_whisper_message"]
