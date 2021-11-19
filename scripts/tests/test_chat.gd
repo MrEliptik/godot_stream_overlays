@@ -5,9 +5,7 @@ var chat = null
 onready var gift = $Gift
 
 func _ready() -> void:
-	gift.connect_to_twitch()
-	yield(gift, "twitch_connected")
-	print("CONNECTED!")
+	pass
 
 func bot_test(cmd_info : CommandInfo) -> void:
 	print(cmd_info)
@@ -17,6 +15,9 @@ func _on_Gift_chat_message(sender_data, message) -> void:
 	print(sender_data.user + ": "+ message)
 
 func _on_ChatConnection_connect_pressed(nick_text, auth_text) -> void:
+	gift.connect_to_twitch()
+	yield(gift, "twitch_connected")
+	print("CONNECTED!")
 	gift.authenticate_oauth(nick_text, auth_text)
 	if(yield(gift, "login_attempt") == false):
 		print("Invalid username or token.")
