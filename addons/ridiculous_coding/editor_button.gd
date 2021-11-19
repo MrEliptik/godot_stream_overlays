@@ -1,6 +1,5 @@
-extends HBoxContainer
-
-signal button_pressed()
+tool
+extends Button
 
 export var connected_color: Color
 export var disconnected_color: Color
@@ -12,15 +11,12 @@ enum STATUS {
 
 func _ready() -> void:
 	pass
-
-func _on_Button_pressed() -> void:
-	emit_signal("button_pressed")
 	
-func set_status(status):
+func set_connection_status(status):
 	match status:
 		STATUS.CONNECTED:
-			$Button.text = "DISCONNECT"
-			$Panel.get_stylebox("panel").bg_color = connected_color
+			text = "STOP"
+			get_stylebox("normal").bg_color = connected_color
 		STATUS.DISCONNECTED:
-			$Panel.get_stylebox("panel").bg_color = disconnected_color
-			$Button.text = "CONNECT"
+			get_stylebox("normal").bg_color = disconnected_color
+			text = "LISTEN"

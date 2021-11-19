@@ -14,6 +14,13 @@ const Newline = preload("res://addons/ridiculous_coding/newline.tscn")
 # The URL we will connect to
 export var websocket_url = "ws://192.168.31.216:9080"
 
+enum EFFECT_TYPE {
+	SHAKE,
+	TYPING,
+	NEW_LINE,
+	BOOM
+}
+
 # Our WebSocketClient instance
 var client = WebSocketClient.new()
 
@@ -52,11 +59,24 @@ func typing(pos, last_key):
 	thing.position = pos
 	thing.destroy = true
 	thing.last_key = last_key
-#	textedit.add_child(thing)
 	add_child(thing)
 	
 	# Shake
 	shake(0.05, 5)
+	
+func new_line(pos):
+	# Draw the thing
+	var thing = Newline.instance()
+	thing.position = pos
+	thing.destroy = true
+	add_child(thing)
+	
+func boom(pos, last_key):
+	var thing = Boom.instance()
+	thing.position = pos
+	thing.destroy = true
+	thing.last_key = last_key
+	add_child(thing)
 	
 ###### WEBSOCKET STUFF
 func create_wss():
@@ -94,9 +114,17 @@ func _on_data():
 	# to receive data from server, and not get_packet directly when not
 	# using the MultiplayerAPI.
 	var data = client.get_peer(1).get_packet().get_string_from_utf8()
-	print("Got data from server: ", data)
+#	print("Got data from server: ", data)
 	var json_res = JSON.parse(data)
-	print(str2var(json_res.result["pos"]))
-	print(json_res.result["last_key"])
-	typing(str2var(json_res.result["pos"]), json_res.result["last_key"])
+
+	match str2var(json_res.result["type"]):
+		EFFECT_TYPE.BOOM:
+			boom(str2var(json_res.result["pos"]), json_res.result["last_key"])
+		EFFECT_TYPE.NEW_LINE:
+			new_line(str2var(json_res.result["pos"]))
+		EFFECT_TYPE.SHAKE:
+			pass
+		EFFECT_TYPE.TYPING:
+			typing(str2var(json_res.result["pos"]), json_res.result["last_key"])
+	
 
