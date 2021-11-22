@@ -24,6 +24,12 @@ Using the microphone (or any other audio stream) display a spectrum analyzer (fr
 
 ![spectrum analyzer](medias_examples/spectrum_analyzer.gif)
 
+### Ridiculous Coding
+
+Turn the [Ridiculous Coding](https://github.com/jotson/ridiculous_coding) addon into an overlay, using websockets to communicate between the editor and the transparent windows (overlay).
+
+![ridiculous coding](medias_examples/ridiculous_coding.gif)
+
 ## HOW TO USE
 
 Each project is using a transparent window, so you can set it to the size you want and capture it with your streaming software. 
