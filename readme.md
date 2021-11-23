@@ -30,6 +30,12 @@ Turn the [Ridiculous Coding](https://github.com/jotson/ridiculous_coding) addon 
 
 ![ridiculous coding](medias_examples/ridiculous_coding.gif)
 
+### Alerts Overlay
+
+A dashboard with button acts as a websocket server. An overlay connects to the server and will receive inputs based on the button pressed, triggering effects. Perfect to trigger alerts or custom events/effects.
+
+![alerts overlay](medias_examples/alerts_overlay.gif)
+
 ## HOW TO USE
 
 Each project is using a transparent window, so you can set it to the size you want and capture it with your streaming software. 

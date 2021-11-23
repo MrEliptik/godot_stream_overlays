@@ -51,7 +51,7 @@ _global_script_class_icons={
 [application]
 
 config/name="godot_stream_overlays"
-run/main_scene="res://scenes/characters_overlay/game.tscn"
+run/main_scene="res://scenes/dashboard/dashboard.tscn"
 config/icon="res://icon.png"
 
 [audio]
