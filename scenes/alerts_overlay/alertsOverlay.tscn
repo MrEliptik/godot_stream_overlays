@@ -1,0 +1,143 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://scripts/alerts_overlay/alertsOverlay.gd" type="Script" id=1]
+[ext_resource path="res://scripts/alerts_overlay/websocketClient.gd" type="Script" id=2]
+[ext_resource path="res://visuals/fonts/Montserrat-Regular.ttf" type="DynamicFontData" id=3]
+
+[sub_resource type="Curve" id=2]
+_data = [ Vector2( 0, 0.0123615 ), 0.0, 0.0, 0, 0, Vector2( 0.094806, 1 ), 0.0, 0.0, 0, 0, Vector2( 0.436867, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=3]
+curve = SubResource( 2 )
+
+[sub_resource type="ParticlesMaterial" id=1]
+emission_shape = 2
+emission_box_extents = Vector3( 960, 1, 1 )
+flag_disable_z = true
+direction = Vector3( 0, 1, 0 )
+gravity = Vector3( 0, 98, 0 )
+initial_velocity = 350.0
+initial_velocity_random = 0.88
+angular_velocity = 476.22
+angular_velocity_random = 0.18
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+scale = 20.0
+scale_random = 0.12
+scale_curve = SubResource( 3 )
+color = Color( 1, 0, 0, 1 )
+hue_variation = 1.0
+hue_variation_random = 1.0
+
+[sub_resource type="StyleBoxFlat" id=4]
+bg_color = Color( 0, 0, 0, 1 )
+
+[sub_resource type="DynamicFont" id=5]
+size = 48
+use_filter = true
+font_data = ExtResource( 3 )
+
+[node name="AlertsOverlay" type="Node2D"]
+script = ExtResource( 1 )
+
+[node name="Confetti" type="Particles2D" parent="."]
+position = Vector2( 960, -31 )
+emitting = false
+amount = 1000
+lifetime = 2.5
+one_shot = true
+explosiveness = 0.8
+randomness = 0.36
+process_material = SubResource( 1 )
+
+[node name="WebsocketClient" type="Node" parent="."]
+script = ExtResource( 2 )
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ConnectionContainer" type="Control" parent="CanvasLayer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="CanvasLayer/ConnectionContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_styles/panel = SubResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/ConnectionContainer"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -439.0
+margin_top = -180.0
+margin_right = 433.0
+margin_bottom = 236.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="CanvasLayer/ConnectionContainer/VBoxContainer"]
+margin_right = 872.0
+margin_bottom = 70.0
+
+[node name="Label" type="Label" parent="CanvasLayer/ConnectionContainer/VBoxContainer/HBoxContainer2"]
+margin_top = 5.0
+margin_right = 260.0
+margin_bottom = 65.0
+custom_fonts/font = SubResource( 5 )
+text = "SERVER IP"
+align = 1
+valign = 1
+
+[node name="ServerIP" type="LineEdit" parent="CanvasLayer/ConnectionContainer/VBoxContainer/HBoxContainer2"]
+margin_left = 264.0
+margin_right = 872.0
+margin_bottom = 70.0
+size_flags_horizontal = 3
+custom_fonts/font = SubResource( 5 )
+text = "192.168.31.30"
+align = 1
+max_length = 16
+placeholder_text = "PORT"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/ConnectionContainer/VBoxContainer"]
+margin_top = 74.0
+margin_right = 872.0
+margin_bottom = 144.0
+
+[node name="Label" type="Label" parent="CanvasLayer/ConnectionContainer/VBoxContainer/HBoxContainer"]
+margin_top = 5.0
+margin_right = 137.0
+margin_bottom = 65.0
+custom_fonts/font = SubResource( 5 )
+text = "PORT"
+align = 1
+valign = 1
+
+[node name="Port" type="LineEdit" parent="CanvasLayer/ConnectionContainer/VBoxContainer/HBoxContainer"]
+margin_left = 141.0
+margin_right = 872.0
+margin_bottom = 70.0
+size_flags_horizontal = 3
+custom_fonts/font = SubResource( 5 )
+text = "9090"
+align = 1
+max_length = 5
+placeholder_text = "PORT"
+
+[node name="ConnectionBtn" type="Button" parent="CanvasLayer/ConnectionContainer/VBoxContainer"]
+margin_top = 148.0
+margin_right = 872.0
+margin_bottom = 214.0
+custom_fonts/font = SubResource( 5 )
+text = "CONNECT"
+
+[connection signal="new_data" from="WebsocketClient" to="." method="_on_WebsocketClient_new_data"]
+[connection signal="pressed" from="CanvasLayer/ConnectionContainer/VBoxContainer/ConnectionBtn" to="." method="_on_ConnectionBtn_pressed"]

@@ -1,0 +1,278 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://visuals/fonts/Montserrat-Regular.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://scripts/dashboard/dashboard.gd" type="Script" id=2]
+[ext_resource path="res://scripts/dashboard/websocketServer.gd" type="Script" id=3]
+
+[sub_resource type="DynamicFont" id=1]
+size = 48
+use_filter = true
+font_data = ExtResource( 1 )
+
+[sub_resource type="StyleBoxFlat" id=2]
+bg_color = Color( 0, 0, 0, 1 )
+
+[node name="Dashboard" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="WebsocketServer" type="Node" parent="."]
+script = ExtResource( 3 )
+
+[node name="ButtonContainer" type="MarginContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_constants/margin_right = 20
+custom_constants/margin_top = 20
+custom_constants/margin_left = 20
+custom_constants/margin_bottom = 20
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ButtonContainer"]
+margin_left = 20.0
+margin_top = 20.0
+margin_right = 1900.0
+margin_bottom = 1060.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ButtonContainer/VBoxContainer"]
+margin_right = 1880.0
+margin_bottom = 60.0
+custom_constants/separation = 40
+alignment = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="ButtonContainer/VBoxContainer/HBoxContainer"]
+margin_left = 882.0
+margin_right = 1293.0
+margin_bottom = 60.0
+custom_constants/separation = 15
+
+[node name="Label" type="Label" parent="ButtonContainer/VBoxContainer/HBoxContainer/HBoxContainer2"]
+margin_right = 49.0
+margin_bottom = 60.0
+custom_fonts/font = SubResource( 1 )
+text = "IP"
+align = 1
+valign = 1
+
+[node name="LocalIP" type="Label" parent="ButtonContainer/VBoxContainer/HBoxContainer/HBoxContainer2"]
+margin_left = 64.0
+margin_right = 411.0
+margin_bottom = 60.0
+size_flags_horizontal = 3
+custom_fonts/font = SubResource( 1 )
+text = "192.934.952.192"
+align = 1
+valign = 1
+
+[node name="ServerStatus" type="Label" parent="ButtonContainer/VBoxContainer/HBoxContainer"]
+margin_left = 1333.0
+margin_right = 1571.0
+margin_bottom = 60.0
+custom_fonts/font = SubResource( 1 )
+text = "STOPPED"
+align = 1
+valign = 1
+
+[node name="ClientStatus" type="Label" parent="ButtonContainer/VBoxContainer/HBoxContainer"]
+margin_left = 1611.0
+margin_right = 1880.0
+margin_bottom = 60.0
+custom_fonts/font = SubResource( 1 )
+text = "NO CLIENT"
+align = 1
+valign = 1
+
+[node name="GridContainer" type="GridContainer" parent="ButtonContainer/VBoxContainer"]
+margin_top = 64.0
+margin_right = 1880.0
+margin_bottom = 1040.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/vseparation = 15
+custom_constants/hseparation = 15
+columns = 5
+
+[node name="Button" type="Button" parent="ButtonContainer/VBoxContainer/GridContainer"]
+margin_right = 364.0
+margin_bottom = 480.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_fonts/font = SubResource( 1 )
+text = "TEST 1"
+
+[node name="Button2" type="Button" parent="ButtonContainer/VBoxContainer/GridContainer"]
+margin_left = 379.0
+margin_right = 743.0
+margin_bottom = 480.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_fonts/font = SubResource( 1 )
+text = "TEST 1"
+
+[node name="Button3" type="Button" parent="ButtonContainer/VBoxContainer/GridContainer"]
+margin_left = 758.0
+margin_right = 1122.0
+margin_bottom = 480.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_fonts/font = SubResource( 1 )
+text = "TEST 1"
+
+[node name="Button4" type="Button" parent="ButtonContainer/VBoxContainer/GridContainer"]
+margin_left = 1137.0
+margin_right = 1501.0
+margin_bottom = 480.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_fonts/font = SubResource( 1 )
+text = "TEST 1"
+
+[node name="Button5" type="Button" parent="ButtonContainer/VBoxContainer/GridContainer"]
+margin_left = 1516.0
+margin_right = 1880.0
+margin_bottom = 480.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_fonts/font = SubResource( 1 )
+text = "TEST 1"
+
+[node name="Button6" type="Button" parent="ButtonContainer/VBoxContainer/GridContainer"]
+margin_top = 495.0
+margin_right = 364.0
+margin_bottom = 975.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_fonts/font = SubResource( 1 )
+text = "TEST 1"
+
+[node name="Button7" type="Button" parent="ButtonContainer/VBoxContainer/GridContainer"]
+margin_left = 379.0
+margin_top = 495.0
+margin_right = 743.0
+margin_bottom = 975.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_fonts/font = SubResource( 1 )
+text = "TEST 1"
+
+[node name="Button8" type="Button" parent="ButtonContainer/VBoxContainer/GridContainer"]
+margin_left = 758.0
+margin_top = 495.0
+margin_right = 1122.0
+margin_bottom = 975.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_fonts/font = SubResource( 1 )
+text = "TEST 1"
+
+[node name="Button9" type="Button" parent="ButtonContainer/VBoxContainer/GridContainer"]
+margin_left = 1137.0
+margin_top = 495.0
+margin_right = 1501.0
+margin_bottom = 975.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_fonts/font = SubResource( 1 )
+text = "TEST 1"
+
+[node name="Button10" type="Button" parent="ButtonContainer/VBoxContainer/GridContainer"]
+margin_left = 1516.0
+margin_top = 495.0
+margin_right = 1880.0
+margin_bottom = 975.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_fonts/font = SubResource( 1 )
+text = "TEST 1"
+
+[node name="ConnectionContainer" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="ConnectionContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_styles/panel = SubResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ConnectionContainer"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -290.0
+margin_top = -180.0
+margin_right = 290.0
+margin_bottom = 236.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="ConnectionContainer/VBoxContainer"]
+margin_right = 580.0
+margin_bottom = 60.0
+
+[node name="Label" type="Label" parent="ConnectionContainer/VBoxContainer/HBoxContainer2"]
+margin_right = 49.0
+margin_bottom = 60.0
+custom_fonts/font = SubResource( 1 )
+text = "IP"
+align = 1
+valign = 1
+
+[node name="LocalIP" type="Label" parent="ConnectionContainer/VBoxContainer/HBoxContainer2"]
+margin_left = 53.0
+margin_right = 580.0
+margin_bottom = 60.0
+size_flags_horizontal = 3
+custom_fonts/font = SubResource( 1 )
+text = "192.934.952.192"
+align = 1
+valign = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ConnectionContainer/VBoxContainer"]
+margin_top = 64.0
+margin_right = 580.0
+margin_bottom = 134.0
+
+[node name="Label" type="Label" parent="ConnectionContainer/VBoxContainer/HBoxContainer"]
+margin_top = 5.0
+margin_right = 137.0
+margin_bottom = 65.0
+custom_fonts/font = SubResource( 1 )
+text = "PORT"
+align = 1
+valign = 1
+
+[node name="Port" type="LineEdit" parent="ConnectionContainer/VBoxContainer/HBoxContainer"]
+margin_left = 141.0
+margin_right = 580.0
+margin_bottom = 70.0
+size_flags_horizontal = 3
+custom_fonts/font = SubResource( 1 )
+text = "9090"
+align = 1
+max_length = 5
+placeholder_text = "PORT"
+
+[node name="ConnectionBtn" type="Button" parent="ConnectionContainer/VBoxContainer"]
+margin_top = 138.0
+margin_right = 580.0
+margin_bottom = 204.0
+custom_fonts/font = SubResource( 1 )
+text = "CONNECT"
+
+[connection signal="client_connected" from="WebsocketServer" to="." method="_on_WebsocketServer_client_connected"]
+[connection signal="pressed" from="ButtonContainer/VBoxContainer/GridContainer/Button" to="." method="_on_Button_pressed"]
+[connection signal="pressed" from="ConnectionContainer/VBoxContainer/ConnectionBtn" to="." method="_on_ConnectionBtn_pressed"]
