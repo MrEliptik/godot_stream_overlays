@@ -62,8 +62,6 @@ enable_audio_input=true
 
 window/size/width=1920
 window/size/height=1080
-window/size/test_width=1280
-window/size/test_height=720
 window/per_pixel_transparency/allowed=true
 window/per_pixel_transparency/enabled=true
 window/stretch/mode="viewport"

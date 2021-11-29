@@ -1,8 +1,11 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://scripts/alerts_overlay/alertsOverlay.gd" type="Script" id=1]
 [ext_resource path="res://scripts/alerts_overlay/websocketClient.gd" type="Script" id=2]
 [ext_resource path="res://visuals/fonts/Montserrat-Regular.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://scenes/alerts_overlay/videoplayer.tscn" type="PackedScene" id=4]
+[ext_resource path="res://visuals/videos/clapping-ulysses-thatcher.ogv" type="VideoStream" id=5]
+[ext_resource path="res://visuals/videos/shocked-pengu.ogv" type="VideoStream" id=6]
 
 [sub_resource type="Curve" id=2]
 _data = [ Vector2( 0, 0.0123615 ), 0.0, 0.0, 0, 0, Vector2( 0.094806, 1 ), 0.0, 0.0, 0, 0, Vector2( 0.436867, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
@@ -37,6 +40,11 @@ size = 48
 use_filter = true
 font_data = ExtResource( 3 )
 
+[sub_resource type="StyleBoxFlat" id=6]
+content_margin_left = 10.0
+content_margin_right = 10.0
+bg_color = Color( 0.6, 0.6, 0.6, 0 )
+
 [node name="AlertsOverlay" type="Node2D"]
 script = ExtResource( 1 )
 
@@ -53,9 +61,70 @@ process_material = SubResource( 1 )
 [node name="WebsocketClient" type="Node" parent="."]
 script = ExtResource( 2 )
 
+[node name="Overlays" type="CanvasLayer" parent="."]
+
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="Overlays"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -208.0
+margin_top = -210.5
+margin_right = 208.0
+margin_bottom = 210.5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ShockedPenguin" parent="Overlays/AspectRatioContainer" instance=ExtResource( 4 )]
+stream = ExtResource( 6 )
+timeout = 4
+
+[node name="AspectRatioContainer2" type="AspectRatioContainer" parent="Overlays"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -219.0
+margin_top = -212.0
+margin_right = 219.0
+margin_bottom = 212.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ClappingUlysses" parent="Overlays/AspectRatioContainer2" instance=ExtResource( 4 )]
+margin_left = 7.0
+margin_top = 0.0
+margin_right = 431.0
+margin_bottom = 424.0
+stream = ExtResource( 5 )
+timeout = 4
+
+[node name="AspectRatioContainer3" type="AspectRatioContainer" parent="Overlays"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -303.0
+margin_top = -220.0
+margin_right = 303.0
+margin_bottom = 220.0
+ratio = 1.379
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HomerRevenge" parent="Overlays/AspectRatioContainer3" instance=ExtResource( 4 )]
+margin_top = 0.275558
+margin_right = 606.0
+margin_bottom = 439.724
+timeout = 4
+
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="ConnectionContainer" type="Control" parent="CanvasLayer"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 __meta__ = {
@@ -75,30 +144,37 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -439.0
-margin_top = -180.0
-margin_right = 433.0
-margin_bottom = 236.0
+margin_left = -380.5
+margin_top = -212.5
+margin_right = 380.5
+margin_bottom = 212.5
+custom_constants/separation = 45
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="CanvasLayer/ConnectionContainer/VBoxContainer"]
-margin_right = 872.0
-margin_bottom = 70.0
+margin_right = 761.0
 
-[node name="Label" type="Label" parent="CanvasLayer/ConnectionContainer/VBoxContainer/HBoxContainer2"]
+[node name="GridContainer" type="GridContainer" parent="CanvasLayer/ConnectionContainer/VBoxContainer"]
+margin_top = 45.0
+margin_right = 761.0
+margin_bottom = 189.0
+columns = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/ConnectionContainer/VBoxContainer/GridContainer"]
 margin_top = 5.0
-margin_right = 260.0
+margin_right = 280.0
 margin_bottom = 65.0
 custom_fonts/font = SubResource( 5 )
+custom_styles/normal = SubResource( 6 )
 text = "SERVER IP"
 align = 1
 valign = 1
 
-[node name="ServerIP" type="LineEdit" parent="CanvasLayer/ConnectionContainer/VBoxContainer/HBoxContainer2"]
-margin_left = 264.0
-margin_right = 872.0
+[node name="ServerIP" type="LineEdit" parent="CanvasLayer/ConnectionContainer/VBoxContainer/GridContainer"]
+margin_left = 284.0
+margin_right = 761.0
 margin_bottom = 70.0
 size_flags_horizontal = 3
 custom_fonts/font = SubResource( 5 )
@@ -107,24 +183,21 @@ align = 1
 max_length = 16
 placeholder_text = "PORT"
 
-[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/ConnectionContainer/VBoxContainer"]
-margin_top = 74.0
-margin_right = 872.0
-margin_bottom = 144.0
-
-[node name="Label" type="Label" parent="CanvasLayer/ConnectionContainer/VBoxContainer/HBoxContainer"]
-margin_top = 5.0
-margin_right = 137.0
-margin_bottom = 65.0
+[node name="Label2" type="Label" parent="CanvasLayer/ConnectionContainer/VBoxContainer/GridContainer"]
+margin_top = 79.0
+margin_right = 280.0
+margin_bottom = 139.0
 custom_fonts/font = SubResource( 5 )
+custom_styles/normal = SubResource( 6 )
 text = "PORT"
 align = 1
 valign = 1
 
-[node name="Port" type="LineEdit" parent="CanvasLayer/ConnectionContainer/VBoxContainer/HBoxContainer"]
-margin_left = 141.0
-margin_right = 872.0
-margin_bottom = 70.0
+[node name="Port" type="LineEdit" parent="CanvasLayer/ConnectionContainer/VBoxContainer/GridContainer"]
+margin_left = 284.0
+margin_top = 74.0
+margin_right = 761.0
+margin_bottom = 144.0
 size_flags_horizontal = 3
 custom_fonts/font = SubResource( 5 )
 text = "9090"
@@ -133,9 +206,10 @@ max_length = 5
 placeholder_text = "PORT"
 
 [node name="ConnectionBtn" type="Button" parent="CanvasLayer/ConnectionContainer/VBoxContainer"]
-margin_top = 148.0
-margin_right = 872.0
-margin_bottom = 214.0
+margin_top = 234.0
+margin_right = 761.0
+margin_bottom = 425.0
+size_flags_vertical = 3
 custom_fonts/font = SubResource( 5 )
 text = "CONNECT"
 

@@ -1,8 +1,12 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://visuals/fonts/Montserrat-Regular.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://scripts/dashboard/dashboard.gd" type="Script" id=2]
 [ext_resource path="res://scripts/dashboard/websocketServer.gd" type="Script" id=3]
+[ext_resource path="res://scenes/alerts_overlay/button.tscn" type="PackedScene" id=4]
+
+[sub_resource type="StyleBoxFlat" id=4]
+bg_color = Color( 0.0863015, 0.0911797, 0.161914, 1 )
 
 [sub_resource type="DynamicFont" id=1]
 size = 48
@@ -11,6 +15,11 @@ font_data = ExtResource( 1 )
 
 [sub_resource type="StyleBoxFlat" id=2]
 bg_color = Color( 0, 0, 0, 1 )
+
+[sub_resource type="StyleBoxFlat" id=3]
+content_margin_left = 29.0
+content_margin_right = 29.0
+bg_color = Color( 0.6, 0.6, 0.6, 0 )
 
 [node name="Dashboard" type="Control"]
 anchor_right = 1.0
@@ -23,9 +32,114 @@ __meta__ = {
 [node name="WebsocketServer" type="Node" parent="."]
 script = ExtResource( 3 )
 
-[node name="ButtonContainer" type="MarginContainer" parent="."]
+[node name="Panel" type="Panel" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
+custom_styles/panel = SubResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer"]
+margin_right = 1920.0
+margin_bottom = 80.0
+rect_min_size = Vector2( 0, 80 )
+custom_constants/margin_right = 45
+custom_constants/margin_left = 45
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/MarginContainer"]
+margin_left = 45.0
+margin_right = 1875.0
+margin_bottom = 80.0
+custom_constants/separation = 40
+alignment = 1
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer/MarginContainer/HBoxContainer"]
+margin_right = 583.0
+margin_bottom = 80.0
+size_flags_horizontal = 3
+custom_constants/separation = 15
+
+[node name="Label" type="Label" parent="VBoxContainer/MarginContainer/HBoxContainer/HBoxContainer2"]
+margin_top = 10.0
+margin_right = 49.0
+margin_bottom = 70.0
+custom_colors/font_color = Color( 0.905882, 1, 0.933333, 1 )
+custom_fonts/font = SubResource( 1 )
+text = "IP"
+align = 1
+valign = 1
+
+[node name="LocalIP" type="Label" parent="VBoxContainer/MarginContainer/HBoxContainer/HBoxContainer2"]
+margin_left = 64.0
+margin_top = 10.0
+margin_right = 583.0
+margin_bottom = 70.0
+size_flags_horizontal = 3
+custom_colors/font_color = Color( 0.905882, 1, 0.933333, 1 )
+custom_fonts/font = SubResource( 1 )
+text = "192.934.952.192"
+align = 1
+valign = 1
+
+[node name="ServerStatus" type="Label" parent="VBoxContainer/MarginContainer/HBoxContainer"]
+margin_left = 623.0
+margin_top = 10.0
+margin_right = 1206.0
+margin_bottom = 70.0
+size_flags_horizontal = 3
+custom_colors/font_color = Color( 0.905882, 1, 0.933333, 1 )
+custom_fonts/font = SubResource( 1 )
+text = "STOPPED"
+align = 1
+valign = 1
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="VBoxContainer/MarginContainer/HBoxContainer"]
+margin_left = 1246.0
+margin_right = 1830.0
+margin_bottom = 80.0
+size_flags_horizontal = 3
+custom_constants/separation = 15
+
+[node name="Label" type="Label" parent="VBoxContainer/MarginContainer/HBoxContainer/HBoxContainer3"]
+margin_top = 10.0
+margin_right = 284.0
+margin_bottom = 70.0
+size_flags_horizontal = 3
+custom_colors/font_color = Color( 0.905882, 1, 0.933333, 1 )
+custom_fonts/font = SubResource( 1 )
+text = "CLIENT"
+align = 1
+valign = 1
+
+[node name="ClientStatus" type="Label" parent="VBoxContainer/MarginContainer/HBoxContainer/HBoxContainer3"]
+margin_left = 299.0
+margin_top = 10.0
+margin_right = 584.0
+margin_bottom = 70.0
+size_flags_horizontal = 3
+custom_colors/font_color = Color( 0.905882, 1, 0.933333, 1 )
+custom_fonts/font = SubResource( 1 )
+text = "NONE"
+align = 1
+valign = 1
+
+[node name="ButtonContainer" type="MarginContainer" parent="VBoxContainer"]
+margin_top = 84.0
+margin_right = 1920.0
+margin_bottom = 1080.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
 custom_constants/margin_right = 20
 custom_constants/margin_top = 20
 custom_constants/margin_left = 20
@@ -34,164 +148,78 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="VBoxContainer" type="VBoxContainer" parent="ButtonContainer"]
+[node name="GridContainer" type="GridContainer" parent="VBoxContainer/ButtonContainer"]
 margin_left = 20.0
 margin_top = 20.0
 margin_right = 1900.0
-margin_bottom = 1060.0
-
-[node name="HBoxContainer" type="HBoxContainer" parent="ButtonContainer/VBoxContainer"]
-margin_right = 1880.0
-margin_bottom = 60.0
-custom_constants/separation = 40
-alignment = 2
-
-[node name="HBoxContainer2" type="HBoxContainer" parent="ButtonContainer/VBoxContainer/HBoxContainer"]
-margin_left = 882.0
-margin_right = 1293.0
-margin_bottom = 60.0
-custom_constants/separation = 15
-
-[node name="Label" type="Label" parent="ButtonContainer/VBoxContainer/HBoxContainer/HBoxContainer2"]
-margin_right = 49.0
-margin_bottom = 60.0
-custom_fonts/font = SubResource( 1 )
-text = "IP"
-align = 1
-valign = 1
-
-[node name="LocalIP" type="Label" parent="ButtonContainer/VBoxContainer/HBoxContainer/HBoxContainer2"]
-margin_left = 64.0
-margin_right = 411.0
-margin_bottom = 60.0
-size_flags_horizontal = 3
-custom_fonts/font = SubResource( 1 )
-text = "192.934.952.192"
-align = 1
-valign = 1
-
-[node name="ServerStatus" type="Label" parent="ButtonContainer/VBoxContainer/HBoxContainer"]
-margin_left = 1333.0
-margin_right = 1571.0
-margin_bottom = 60.0
-custom_fonts/font = SubResource( 1 )
-text = "STOPPED"
-align = 1
-valign = 1
-
-[node name="ClientStatus" type="Label" parent="ButtonContainer/VBoxContainer/HBoxContainer"]
-margin_left = 1611.0
-margin_right = 1880.0
-margin_bottom = 60.0
-custom_fonts/font = SubResource( 1 )
-text = "NO CLIENT"
-align = 1
-valign = 1
-
-[node name="GridContainer" type="GridContainer" parent="ButtonContainer/VBoxContainer"]
-margin_top = 64.0
-margin_right = 1880.0
-margin_bottom = 1040.0
+margin_bottom = 976.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/vseparation = 15
 custom_constants/hseparation = 15
 columns = 5
 
-[node name="Button" type="Button" parent="ButtonContainer/VBoxContainer/GridContainer"]
-margin_right = 364.0
-margin_bottom = 480.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_fonts/font = SubResource( 1 )
-text = "TEST 1"
+[node name="Button" parent="VBoxContainer/ButtonContainer/GridContainer" instance=ExtResource( 4 )]
+text = "CONFETTI"
 
-[node name="Button2" type="Button" parent="ButtonContainer/VBoxContainer/GridContainer"]
+[node name="Button2" parent="VBoxContainer/ButtonContainer/GridContainer" instance=ExtResource( 4 )]
 margin_left = 379.0
 margin_right = 743.0
-margin_bottom = 480.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_fonts/font = SubResource( 1 )
-text = "TEST 1"
+text = "PENGUIN"
+id = 1
 
-[node name="Button3" type="Button" parent="ButtonContainer/VBoxContainer/GridContainer"]
+[node name="Button3" parent="VBoxContainer/ButtonContainer/GridContainer" instance=ExtResource( 4 )]
 margin_left = 758.0
 margin_right = 1122.0
-margin_bottom = 480.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_fonts/font = SubResource( 1 )
-text = "TEST 1"
+text = "CLAP"
+id = 2
 
-[node name="Button4" type="Button" parent="ButtonContainer/VBoxContainer/GridContainer"]
+[node name="Button4" parent="VBoxContainer/ButtonContainer/GridContainer" instance=ExtResource( 4 )]
 margin_left = 1137.0
 margin_right = 1501.0
-margin_bottom = 480.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_fonts/font = SubResource( 1 )
-text = "TEST 1"
+text = "HOMER"
+id = 3
 
-[node name="Button5" type="Button" parent="ButtonContainer/VBoxContainer/GridContainer"]
+[node name="Button5" parent="VBoxContainer/ButtonContainer/GridContainer" instance=ExtResource( 4 )]
 margin_left = 1516.0
 margin_right = 1880.0
-margin_bottom = 480.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_fonts/font = SubResource( 1 )
-text = "TEST 1"
+id = 4
 
-[node name="Button6" type="Button" parent="ButtonContainer/VBoxContainer/GridContainer"]
-margin_top = 495.0
-margin_right = 364.0
-margin_bottom = 975.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_fonts/font = SubResource( 1 )
-text = "TEST 1"
+[node name="Button6" parent="VBoxContainer/ButtonContainer/GridContainer" instance=ExtResource( 4 )]
+margin_top = 485.0
+margin_bottom = 955.0
+id = 5
 
-[node name="Button7" type="Button" parent="ButtonContainer/VBoxContainer/GridContainer"]
+[node name="Button7" parent="VBoxContainer/ButtonContainer/GridContainer" instance=ExtResource( 4 )]
 margin_left = 379.0
-margin_top = 495.0
+margin_top = 485.0
 margin_right = 743.0
-margin_bottom = 975.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_fonts/font = SubResource( 1 )
-text = "TEST 1"
+margin_bottom = 955.0
+id = 6
 
-[node name="Button8" type="Button" parent="ButtonContainer/VBoxContainer/GridContainer"]
+[node name="Button8" parent="VBoxContainer/ButtonContainer/GridContainer" instance=ExtResource( 4 )]
 margin_left = 758.0
-margin_top = 495.0
+margin_top = 485.0
 margin_right = 1122.0
-margin_bottom = 975.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_fonts/font = SubResource( 1 )
-text = "TEST 1"
+margin_bottom = 955.0
+id = 7
 
-[node name="Button9" type="Button" parent="ButtonContainer/VBoxContainer/GridContainer"]
+[node name="Button9" parent="VBoxContainer/ButtonContainer/GridContainer" instance=ExtResource( 4 )]
 margin_left = 1137.0
-margin_top = 495.0
+margin_top = 485.0
 margin_right = 1501.0
-margin_bottom = 975.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_fonts/font = SubResource( 1 )
-text = "TEST 1"
+margin_bottom = 955.0
+id = 8
 
-[node name="Button10" type="Button" parent="ButtonContainer/VBoxContainer/GridContainer"]
+[node name="Button10" parent="VBoxContainer/ButtonContainer/GridContainer" instance=ExtResource( 4 )]
 margin_left = 1516.0
-margin_top = 495.0
+margin_top = 485.0
 margin_right = 1880.0
-margin_bottom = 975.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_fonts/font = SubResource( 1 )
-text = "TEST 1"
+margin_bottom = 955.0
+id = 9
 
 [node name="ConnectionContainer" type="Control" parent="."]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 __meta__ = {
@@ -211,29 +239,31 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -290.0
-margin_top = -180.0
-margin_right = 290.0
-margin_bottom = 236.0
+margin_left = -325.5
+margin_top = -164.0
+margin_right = 325.5
+margin_bottom = 164.0
+custom_constants/separation = 45
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="ConnectionContainer/VBoxContainer"]
-margin_right = 580.0
-margin_bottom = 60.0
+[node name="GridContainer" type="GridContainer" parent="ConnectionContainer/VBoxContainer"]
+margin_right = 651.0
+margin_bottom = 134.0
+columns = 2
 
-[node name="Label" type="Label" parent="ConnectionContainer/VBoxContainer/HBoxContainer2"]
-margin_right = 49.0
+[node name="Label" type="Label" parent="ConnectionContainer/VBoxContainer/GridContainer"]
+margin_right = 195.0
 margin_bottom = 60.0
 custom_fonts/font = SubResource( 1 )
 text = "IP"
 align = 1
 valign = 1
 
-[node name="LocalIP" type="Label" parent="ConnectionContainer/VBoxContainer/HBoxContainer2"]
-margin_left = 53.0
-margin_right = 580.0
+[node name="LocalIP" type="Label" parent="ConnectionContainer/VBoxContainer/GridContainer"]
+margin_left = 199.0
+margin_right = 651.0
 margin_bottom = 60.0
 size_flags_horizontal = 3
 custom_fonts/font = SubResource( 1 )
@@ -241,24 +271,21 @@ text = "192.934.952.192"
 align = 1
 valign = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="ConnectionContainer/VBoxContainer"]
-margin_top = 64.0
-margin_right = 580.0
-margin_bottom = 134.0
-
-[node name="Label" type="Label" parent="ConnectionContainer/VBoxContainer/HBoxContainer"]
-margin_top = 5.0
-margin_right = 137.0
-margin_bottom = 65.0
+[node name="Label2" type="Label" parent="ConnectionContainer/VBoxContainer/GridContainer"]
+margin_top = 69.0
+margin_right = 195.0
+margin_bottom = 129.0
 custom_fonts/font = SubResource( 1 )
+custom_styles/normal = SubResource( 3 )
 text = "PORT"
 align = 1
 valign = 1
 
-[node name="Port" type="LineEdit" parent="ConnectionContainer/VBoxContainer/HBoxContainer"]
-margin_left = 141.0
-margin_right = 580.0
-margin_bottom = 70.0
+[node name="Port" type="LineEdit" parent="ConnectionContainer/VBoxContainer/GridContainer"]
+margin_left = 199.0
+margin_top = 64.0
+margin_right = 651.0
+margin_bottom = 134.0
 size_flags_horizontal = 3
 custom_fonts/font = SubResource( 1 )
 text = "9090"
@@ -267,12 +294,12 @@ max_length = 5
 placeholder_text = "PORT"
 
 [node name="ConnectionBtn" type="Button" parent="ConnectionContainer/VBoxContainer"]
-margin_top = 138.0
-margin_right = 580.0
-margin_bottom = 204.0
+margin_top = 179.0
+margin_right = 651.0
+margin_bottom = 328.0
+size_flags_vertical = 3
 custom_fonts/font = SubResource( 1 )
 text = "CONNECT"
 
 [connection signal="client_connected" from="WebsocketServer" to="." method="_on_WebsocketServer_client_connected"]
-[connection signal="pressed" from="ButtonContainer/VBoxContainer/GridContainer/Button" to="." method="_on_Button_pressed"]
 [connection signal="pressed" from="ConnectionContainer/VBoxContainer/ConnectionBtn" to="." method="_on_ConnectionBtn_pressed"]

@@ -2,6 +2,7 @@ extends Control
 
 export var max_color: Color = Color.red
 export var min_color: Color = Color.green
+export var window_title: String = "Sepctrum analyzer overlay"
 
 var effect_capture = null
 var effect_spectrum = null
@@ -15,6 +16,7 @@ const HEIGHT = 100
 const MIN_DB = 60
 
 func _ready() -> void:
+	OS.set_window_title(window_title)
 	get_tree().get_root().set_transparent_background(true)
 	# We get the index of the "Record" bus.
 	var idx = AudioServer.get_bus_index("Microphone")

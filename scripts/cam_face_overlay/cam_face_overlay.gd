@@ -5,6 +5,7 @@ export(float, 0.0, 1.0) var speak_threshold: = 0.05
 
 export var open: StreamTexture = preload("res://visuals/mouth_open.png")
 export var closed: StreamTexture = preload("res://visuals/mouth_closed.png")
+export var window_title: String = "Cam face overlay"
 
 var effect_record = null
 var effect_capture = null
@@ -13,6 +14,7 @@ var should_close = false
 var speaking = false
 
 func _ready() -> void:
+	OS.set_window_title(window_title)
 	get_tree().get_root().set_transparent_background(true)
 	# We get the index of the "Record" bus.
 	var idx = AudioServer.get_bus_index("Microphone")

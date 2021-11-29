@@ -1,5 +1,7 @@
 extends Node2D
 
+export var window_title: String = "Ridiculous overlay"
+
 var shake = 0.0
 var shake_intensity = 0.0
 var timer = 0.0
@@ -25,6 +27,7 @@ enum EFFECT_TYPE {
 var client = WebSocketClient.new()
 
 func _ready() -> void:
+	OS.set_window_title(window_title)
 	get_tree().get_root().set_transparent_background(true)
 	create_wss()
 
