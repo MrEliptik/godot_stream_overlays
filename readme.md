@@ -2,7 +2,7 @@
 
 ⚠️ Everything is subject to change as I'm actively working on it! ⚠️
 
-This is a collection of various overlays, made from streaming, with Godot! I'm making them live on [Twitch](https://twitch.tv/mreliptik)
+This is a collection of various overlays, made for streaming, with Godot! I'm making them live on [Twitch](https://twitch.tv/mreliptik)
 
 ## Projects
 
