@@ -2,6 +2,7 @@ extends Node2D
 
 export var character_scene: PackedScene = preload("res://scenes/characters_overlay/character.tscn")
 export var channel_name: String = "mreliptik"
+export var window_title: String = "Characters overlay"
 
 onready var http_request = $HTTPRequest
 onready var characters = $Characters
@@ -13,6 +14,7 @@ var credentials = null
 var commands_list = "Welcome! I'm eliptikbot, at your service!\nTo control your avatar, whisper me a command.\nCommands available:\n!color #h3h3h3\n!jump\n!speed 500\n!say something"
 
 func _ready() -> void:
+	OS.set_window_title(window_title)
 	# Connecting to twitch with the websocket, no credentials required
 	gift.connect_to_twitch()
 	yield(gift, "twitch_connected")

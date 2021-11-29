@@ -1,0 +1,64 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://visuals/fonts/Montserrat-Regular.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://scripts/dashboard/button.gd" type="Script" id=2]
+
+[sub_resource type="DynamicFont" id=1]
+size = 48
+use_filter = true
+font_data = ExtResource( 1 )
+
+[sub_resource type="StyleBoxFlat" id=6]
+bg_color = Color( 0.152941, 0.160784, 0.27451, 1 )
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color( 0.905882, 1, 0.933333, 1 )
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id=7]
+bg_color = Color( 0.0862745, 0.0901961, 0.160784, 1 )
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id=5]
+bg_color = Color( 0.152941, 0.160784, 0.27451, 1 )
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id=8]
+bg_color = Color( 0.105882, 0.109804, 0.14902, 1 )
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[node name="Button" type="Button"]
+margin_right = 364.0
+margin_bottom = 470.0
+focus_mode = 0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_fonts/font = SubResource( 1 )
+custom_styles/hover = SubResource( 6 )
+custom_styles/pressed = SubResource( 7 )
+custom_styles/focus = SubResource( 5 )
+custom_styles/disabled = SubResource( 8 )
+custom_styles/normal = SubResource( 5 )
+text = "BUTTON 1"
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0

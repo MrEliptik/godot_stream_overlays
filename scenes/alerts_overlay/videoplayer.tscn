@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://visuals/videos/homer-simpson-revenge.ogv" type="VideoStream" id=1]
+[ext_resource path="res://scripts/dashboard/videoPlayer.gd" type="Script" id=2]
+
+[node name="ShockedPenguin" type="VideoPlayer"]
+margin_top = 2.5
+margin_right = 416.0
+margin_bottom = 418.5
+stream = ExtResource( 1 )
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Timer" type="Timer" parent="."]
+
+[connection signal="finished" from="." to="." method="_on_ShockedPenguin_finished"]
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
