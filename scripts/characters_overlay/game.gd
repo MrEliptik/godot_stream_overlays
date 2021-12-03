@@ -4,14 +4,15 @@ export var character_scene: PackedScene = preload("res://scenes/characters_overl
 export var channel_name: String = "mreliptik"
 export var window_title: String = "Characters overlay"
 
-onready var http_request = $HTTPRequest
 onready var characters = $Characters
 
 onready var gift = $Gift
+onready var users = $Users
 
 var credentials = null
 
 var commands_list = "Welcome! I'm eliptikbot, at your service!\nTo control your avatar, whisper me a command.\nCommands available:\n!color #h3h3h3\n!jump\n!speed 500\n!say something"
+
 
 func _ready() -> void:
 	OS.set_window_title(window_title)
@@ -25,6 +26,8 @@ func _ready() -> void:
 	$Polygon2D.polygon = $StaticBody2D.global_transform.xform($StaticBody2D/CollisionPolygon2D.polygon)
 	get_tree().get_root().set_transparent_background(true)
 #	get_twitch_viewers()
+
+	users.load_users()
 
 func read_crendentials() -> Dictionary:
 	var credentials = {"username": "", "oauth": ""}
@@ -51,7 +54,8 @@ func spawn_viewers(viewers):
 	for child in children:
 		viewer_names.append(child.username)
 		
-	for viewer in viewers:
+	for i in range(viewers.size()):
+		var viewer = viewers[i]
 		if viewer in viewer_names: continue
 		var instance = character_scene.instance()
 		characters.call_deferred("add_child", instance)
@@ -60,6 +64,12 @@ func spawn_viewers(viewers):
 		instance.global_position = Vector2(rand_range(40, 1800), 1080/2)
 		instance.initial_pos = instance.global_position
 		gift.chat(commands_list)
+		if !users.user_exist(viewer):
+			users.create_user(viewer, instance.color, true)
+		else:
+			instance.set_color(users.get_user_color(viewer))
+			users.update_user(viewer, null, true)
+	users.save_users()
 		
 func despawn_viewers(viewers):
 	var children = $Characters.get_children()
@@ -72,16 +82,22 @@ func despawn_viewers(viewers):
 		var idx = viewer_names.find(viewer)
 		if idx == -1: continue
 		$Characters.get_child(idx).call_deferred("queue_free")
+		if !users.user_exist(viewer):
+			return
+		users.update_user(viewer, null, false)
+	users.save_users()
 		
 func change_viewer_color(user, arg_arr):
 	var new_color: Color
 	
 	var children = $Characters.get_children()
 	var viewer_names = []
+	var viewer: String
 	for child in children:
 		viewer_names.append(child.username)
 		
 	var idx = viewer_names.find(user)
+	viewer = viewer_names[idx]
 	if idx == -1: return
 	
 	if arg_arr.size() == 0:
@@ -95,6 +111,8 @@ func change_viewer_color(user, arg_arr):
 			print(new_color)
 			if !new_color: return
 			children[idx].set_color(new_color)
+			users.update_user(viewer, new_color, null)
+			users.save_users()
 		else:
 			return
 
@@ -151,19 +169,15 @@ func reset_viewer(user):
 	
 	children[idx].reset()
 
-func get_twitch_viewers():
-	# Perform a GET request. The URL below returns JSON as of writing.
-	var url = "https://tmi.twitch.tv/group/user/{channel}/chatters".format({"channel":channel_name})
-	print(url)
-	var error = http_request.request(url)
-	if error != OK:
-		push_error("An error occurred in the HTTP request.")
 
-func _on_HTTPRequest_request_completed(result: int, response_code: int, headers: PoolStringArray, body: PoolByteArray) -> void:
-	var response = parse_json(body.get_string_from_utf8())
-	var viewers = response.get("chatters").get("viewers")
-	print(viewers)
-	spawn_viewers(viewers)
+############### GIFT SIGNALS ##################
+func _on_Gift_user_join(sender_data) -> void:
+	if !users.is_viewer_joining(sender_data.user): return
+	spawn_viewers([sender_data.user])
+
+func _on_Gift_user_part(sender_data) -> void:
+	if !users.is_viewer_joining(sender_data.user): return
+	despawn_viewers([sender_data.user])
 
 func on_viewer_join(cmd_info : CommandInfo):
 	spawn_viewers([cmd_info.sender_data.user])
