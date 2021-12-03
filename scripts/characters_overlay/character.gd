@@ -7,6 +7,7 @@ var max_speed := 1500.0
 var min_speed := 0.0
 var velocity := Vector2.ZERO
 var username: String = ""
+var color: Color
 
 var initial_pos: Vector2
 
@@ -46,9 +47,11 @@ func set_speed(speed: float):
 
 func set_color(color: Color):
 	$BasicAvatar.modulate = color
+	self.color = color
 
 func set_random_color():
-	$BasicAvatar.modulate = Color(rand_range(0, 1), rand_range(0, 1), rand_range(0, 1))
+	color = Color(rand_range(0, 1), rand_range(0, 1), rand_range(0, 1))
+	$BasicAvatar.modulate = color
 
 func set_username(username):
 	$Username.text = username
