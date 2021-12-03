@@ -2,3 +2,4 @@
 export.cfg
 exports_presets.cfg
 twitch_credentials.txt
+build/*
