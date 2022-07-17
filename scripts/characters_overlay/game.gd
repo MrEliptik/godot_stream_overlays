@@ -16,14 +16,10 @@ var commands_list = "Welcome! I'm eliptikbot, at your service!\nTo control your 
 
 func _ready() -> void:
 	OS.set_window_title(window_title)
-	# Connecting to twitch with the websocket, no credentials required
-	gift.connect_to_twitch()
-	yield(gift, "twitch_connected")
-	print("CONNECTED!")
+	$CanvasLayer/ChatConnection.visible = true
 	
 	credentials = read_crendentials()
 	
-	$Polygon2D.polygon = $StaticBody2D.global_transform.xform($StaticBody2D/CollisionPolygon2D.polygon)
 	get_tree().get_root().set_transparent_background(true)
 #	get_twitch_viewers()
 
@@ -141,7 +137,6 @@ func viewer_say(user, arg_arr):
 	var idx = viewer_names.find(user)
 	if idx == -1: return
 	
-	print(arg_arr.size())
 	if arg_arr.size() == 0:
 		pass
 	else:
@@ -189,7 +184,8 @@ func on_viewer_reset(cmd_info : CommandInfo):
 	reset_viewer(cmd_info.sender_data.user)
 	
 func on_viewer_color(cmd_info : CommandInfo, arg_arr : PoolStringArray):
-	change_viewer_color(cmd_info.sender_data.user, arg_arr)
+	pass
+#	change_viewer_color(cmd_info.sender_data.user, arg_arr)
 
 func on_viewer_jump(cmd_info : CommandInfo):
 	viewer_jump(cmd_info.sender_data.user)
@@ -201,6 +197,10 @@ func on_viewer_say(cmd_info : CommandInfo, arg_arr : PoolStringArray):
 	viewer_say(cmd_info.sender_data.user, arg_arr)
 
 func _on_ChatConnection_connect_pressed(nick_text, auth_text) -> void:
+	# Connecting to twitch with the websocket, no credentials required
+	gift.connect_to_twitch()
+	yield(gift, "twitch_connected")
+	print("CONNECTED!")
 	if credentials["username"] != "" && credentials["oauth"] != "":
 		gift.authenticate_oauth(credentials["username"], credentials["oauth"])
 	else:
@@ -230,3 +230,5 @@ func _on_Gift_whisper_message(sender_data, message) -> void:
 
 func _on_Gift_chat_message(sender_data, message) -> void:
 	pass
+#	if users.is_viewer_display_chat(sender_data.user):
+#		viewer_say(sender_data.user, PoolStringArray([message]))

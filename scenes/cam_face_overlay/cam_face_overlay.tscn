@@ -70,6 +70,7 @@ __meta__ = {
 }
 
 [node name="ProgressBar" type="ProgressBar" parent="."]
+visible = false
 anchor_left = 0.5
 anchor_right = 0.5
 margin_left = -438.0
