@@ -1,7 +1,8 @@
 extends KinematicBody2D
 
 var gravity := 5.0
-var speed := 50.0
+#var speed := 500.0
+var speed := 100.0
 var jump_force := 500.0
 var max_speed := 150.0
 var min_speed := 0.0
@@ -35,7 +36,7 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	if not is_on_floor():
 		velocity.y += gravity
-	
+
 	velocity = move_and_slide(velocity, Vector2.UP, true, 4, deg2rad(50), true)
 	
 func load_avatars():
@@ -79,6 +80,9 @@ func set_random_color():
 func set_username(username):
 	username_label.text = username
 	self.username = username
+	
+func set_username_visibility(visibility: bool) -> void:
+	$GridContainer.visible = visibility
 
 func _on_Timer_timeout() -> void:
 	$Timer.start(rand_range(4, 10))
@@ -88,6 +92,8 @@ func _on_Timer_timeout() -> void:
 	else:
 		$AnimationPlayer.play("idle")
 	velocity.x = new_dir.x * speed
+#	add_central_force(Vector2(new_dir.x * speed, 0))
+#	call_deferred("set_axis_velocity", Vector2(new_dir.x * speed, 0))
 
 func _on_MessageTimer_timeout() -> void:
 	$Message.visible = false

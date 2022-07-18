@@ -7,8 +7,8 @@ enum BOX_TYPE {BOMB, COIN}
 
 func _ready() -> void:
 	randomize()
-	$Timer.start(rand_range(1, 6))
-#	$Timer.start(rand_range(50, 600))
+#	$Timer.start(rand_range(1, 6))
+	$Timer.start(rand_range(50, 600))
 
 func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("left_click"):
@@ -40,4 +40,5 @@ func spawn_random_box(pos=null) -> void:
 
 func _on_Timer_timeout() -> void:
 	spawn_random_box()
-	$Timer.start(rand_range(1, 6))
+#	$Timer.start(rand_range(1, 6))
+	$Timer.start(rand_range(50, 600))

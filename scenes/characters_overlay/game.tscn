@@ -416,9 +416,14 @@ script = ExtResource( 11 )
 [node name="Timer" type="Timer" parent="Spawner"]
 one_shot = true
 
+[node name="BotTimer" type="Timer" parent="."]
+wait_time = 30.0
+one_shot = true
+
 [connection signal="chat_message" from="Gift" to="." method="_on_Gift_chat_message"]
 [connection signal="user_join" from="Gift" to="." method="_on_Gift_user_join"]
 [connection signal="user_part" from="Gift" to="." method="_on_Gift_user_part"]
 [connection signal="whisper_message" from="Gift" to="." method="_on_Gift_whisper_message"]
 [connection signal="connect_pressed" from="CanvasLayer/ChatConnection" to="." method="_on_ChatConnection_connect_pressed"]
 [connection signal="timeout" from="Spawner/Timer" to="Spawner" method="_on_Timer_timeout"]
+[connection signal="timeout" from="BotTimer" to="." method="_on_BotTimer_timeout"]
