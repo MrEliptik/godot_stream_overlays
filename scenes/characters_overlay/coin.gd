@@ -41,4 +41,5 @@ func push(impulse: Vector2) -> void:
 
 func _on_Coin_body_entered(body: Node) -> void:
 	if not body.is_in_group("Characters"): return
+	body.add_xp(type_values[type]["value"])
 	queue_free()
