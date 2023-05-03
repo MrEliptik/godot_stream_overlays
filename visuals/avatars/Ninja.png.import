@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/basic_avatar.png-f927d5e0e4edf3270d1505a9e65f4358.stex"
+path="res://.import/Ninja.png-c19fac3a9cf7789c32107d5a3e772722.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://visuals/avatars/basic_avatar.png"
-dest_files=[ "res://.import/basic_avatar.png-f927d5e0e4edf3270d1505a9e65f4358.stex" ]
+source_file="res://visuals/avatars/Ninja.png"
+dest_files=[ "res://.import/Ninja.png-c19fac3a9cf7789c32107d5a3e772722.stex" ]
 
 [params]
 

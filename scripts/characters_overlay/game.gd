@@ -13,17 +13,15 @@ var credentials = null
 
 var commands_list = "Welcome! I'm eliptikbot, at your service!\nTo control your avatar, whisper me a command.\nCommands available:\n!color #h3h3h3\n!jump\n!speed 500\n!say something"
 
+var bot_can_speak: bool = true
+
 
 func _ready() -> void:
 	OS.set_window_title(window_title)
-	# Connecting to twitch with the websocket, no credentials required
-	gift.connect_to_twitch()
-	yield(gift, "twitch_connected")
-	print("CONNECTED!")
+	$CanvasLayer/ChatConnection.visible = true
 	
 	credentials = read_crendentials()
 	
-	$Polygon2D.polygon = $StaticBody2D.global_transform.xform($StaticBody2D/CollisionPolygon2D.polygon)
 	get_tree().get_root().set_transparent_background(true)
 #	get_twitch_viewers()
 
@@ -47,31 +45,70 @@ func read_crendentials() -> Dictionary:
 	file.close()
 	
 	return credentials
+
+func join_viewers(viewers: Array, display_username: bool = false) -> void:
+	# Spawn the viewer if not already present
+	var viewers_spawned: int = spawn_viewers(viewers, display_username)
+	if viewers_spawned == 0:
+		# Viewer is already present, show their username
+		var children = $Characters.get_children()
+		var viewer_names = []
+		for child in children:
+			viewer_names.append(child.username)
+			if child.username in viewers:
+				child.set_username_visibility(true)
+		
+		for viewer in viewers:
+			if not users.user_exist(viewer):
+				users.create_user(viewer, Color.white, true, display_username)
+			else:
+				users.update_user(viewer, null, true, display_username)
+				
+func leave_viewers(viewers: Array) -> void:
+	# Hide the username of the viewer
+	var children = $Characters.get_children()
+	var viewer_names = []
+	for child in children:
+		viewer_names.append(child.username)
+		if child.username in viewers:
+			child.set_username_visibility(false)
 	
-func spawn_viewers(viewers):
+func spawn_viewers(viewers: Array, display_username: bool = false) -> int:
+	var viewers_added: int = 0
 	var children = $Characters.get_children()
 	var viewer_names = []
 	for child in children:
 		viewer_names.append(child.username)
 		
 	for i in range(viewers.size()):
-		var viewer = viewers[i]
+		var viewer: String = viewers[i]
+		if "bot" in viewer: continue
 		if viewer in viewer_names: continue
 		var instance = character_scene.instance()
-		characters.call_deferred("add_child", instance)
-		yield(instance, "ready")
+#		characters.call_deferred("add_child", instance)
+#		yield(instance, "ready")
+		characters.add_child(instance)
 		instance.set_username(viewer)
-		instance.global_position = Vector2(rand_range(40, 1800), 1080/2)
+		instance.global_position = Vector2(rand_range(60, 1500), 1080/2)
 		instance.initial_pos = instance.global_position
-		gift.chat(commands_list)
-		if !users.user_exist(viewer):
-			users.create_user(viewer, instance.color, true)
-		else:
-			instance.set_color(users.get_user_color(viewer))
-			users.update_user(viewer, null, true)
-	users.save_users()
 		
-func despawn_viewers(viewers):
+		if bot_can_speak:
+#			gift.chat(commands_list)
+			bot_can_speak = false
+			$BotTimer.start()
+		
+		if not users.user_exist(viewer):
+			users.create_user(viewer, instance.color, true, display_username)
+		else:
+#			instance.set_color(users.get_user_color(viewer))
+			users.update_user(viewer, null, true, null)
+		
+		instance.set_username_visibility(users.is_viewer_showing_username(viewer))
+		viewers_added += 1
+	users.save_users()
+	return viewers_added
+		
+func despawn_viewers(viewers: Array):
 	var children = $Characters.get_children()
 	var viewer_names = []
 	for child in children:
@@ -84,8 +121,8 @@ func despawn_viewers(viewers):
 		$Characters.get_child(idx).call_deferred("queue_free")
 		if !users.user_exist(viewer):
 			return
-		users.update_user(viewer, null, false)
-	users.save_users()
+#		users.update_user(viewer, null, false)
+#	users.save_users()
 		
 func change_viewer_color(user, arg_arr):
 	var new_color: Color
@@ -141,7 +178,6 @@ func viewer_say(user, arg_arr):
 	var idx = viewer_names.find(user)
 	if idx == -1: return
 	
-	print(arg_arr.size())
 	if arg_arr.size() == 0:
 		pass
 	else:
@@ -171,25 +207,28 @@ func reset_viewer(user):
 
 
 ############### GIFT SIGNALS ##################
+# Enter chat signal
 func _on_Gift_user_join(sender_data) -> void:
-	if !users.is_viewer_joining(sender_data.user): return
 	spawn_viewers([sender_data.user])
 
+# Exit chat signal
 func _on_Gift_user_part(sender_data) -> void:
 	if !users.is_viewer_joining(sender_data.user): return
 	despawn_viewers([sender_data.user])
-
+	
+############### CHAT COMMANDS ##################
 func on_viewer_join(cmd_info : CommandInfo):
-	spawn_viewers([cmd_info.sender_data.user])
+	join_viewers([cmd_info.sender_data.user], true)
 	
 func on_viewer_leave(cmd_info : CommandInfo):
-	despawn_viewers([cmd_info.sender_data.user])
+	leave_viewers([cmd_info.sender_data.user])
 	
 func on_viewer_reset(cmd_info : CommandInfo):
 	reset_viewer(cmd_info.sender_data.user)
 	
 func on_viewer_color(cmd_info : CommandInfo, arg_arr : PoolStringArray):
-	change_viewer_color(cmd_info.sender_data.user, arg_arr)
+	pass
+#	change_viewer_color(cmd_info.sender_data.user, arg_arr)
 
 func on_viewer_jump(cmd_info : CommandInfo):
 	viewer_jump(cmd_info.sender_data.user)
@@ -201,6 +240,10 @@ func on_viewer_say(cmd_info : CommandInfo, arg_arr : PoolStringArray):
 	viewer_say(cmd_info.sender_data.user, arg_arr)
 
 func _on_ChatConnection_connect_pressed(nick_text, auth_text) -> void:
+	# Connecting to twitch with the websocket, no credentials required
+	gift.connect_to_twitch()
+	yield(gift, "twitch_connected")
+	print("CONNECTED!")
 	if credentials["username"] != "" && credentials["oauth"] != "":
 		gift.authenticate_oauth(credentials["username"], credentials["oauth"])
 	else:
@@ -230,3 +273,8 @@ func _on_Gift_whisper_message(sender_data, message) -> void:
 
 func _on_Gift_chat_message(sender_data, message) -> void:
 	pass
+#	if users.is_viewer_display_chat(sender_data.user):
+#		viewer_say(sender_data.user, PoolStringArray([message]))
+
+func _on_BotTimer_timeout() -> void:
+	bot_can_speak = true
