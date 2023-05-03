@@ -306,6 +306,7 @@ margin_left = -228.0
 margin_top = -207.0
 margin_right = 228.0
 margin_bottom = 207.0
+mouse_filter = 2
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 position = Vector2( 960, 1070 )

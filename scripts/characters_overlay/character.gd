@@ -21,6 +21,7 @@ enum direction {
 var directions = [Vector2.RIGHT, Vector2.LEFT, Vector2.ZERO]
 
 var avatars = []
+var attached_to_mouse: bool = false
 
 onready var username_label = $GridContainer/Username
 onready var lvl_label = $GridContainer/Lvl
@@ -34,6 +35,10 @@ func _ready() -> void:
 	$BasicAvatar.texture = avatars[idx]
 	
 func _physics_process(delta: float) -> void:
+	if attached_to_mouse:
+		global_position = get_global_mouse_position()
+		return
+	
 	if not is_on_floor():
 		velocity.y += gravity
 
@@ -86,7 +91,6 @@ func set_username_visibility(visibility: bool) -> void:
 
 func push(impulse: Vector2) -> void:
 	velocity += impulse * 0.1
-#	apply_central_impulse(impulse)
 
 func _on_Timer_timeout() -> void:
 	$Timer.start(rand_range(4, 10))
@@ -96,12 +100,14 @@ func _on_Timer_timeout() -> void:
 	else:
 		$AnimationPlayer.play("idle")
 	velocity.x = new_dir.x * speed
-#	linear_velocity.x = new_dir.x * speed * 4.0
-#	add_central_force(Vector2(new_dir.x * speed, 0))
-#	call_deferred("set_axis_velocity", Vector2(new_dir.x * speed, 0))
 
 func _on_MessageTimer_timeout() -> void:
 	$Message.visible = false
 
 func _on_VisibilityNotifier2D_viewport_exited(viewport: Viewport) -> void:
 	reset()
+
+func _on_PickingArea_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
+	if not event is InputEventMouseButton: return
+	if event.button_index != BUTTON_LEFT: return
+	attached_to_mouse = event.is_pressed()

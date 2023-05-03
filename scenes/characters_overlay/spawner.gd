@@ -11,9 +11,9 @@ func _ready() -> void:
 	$Timer.start(rand_range(50, 600))
 
 func _process(delta: float) -> void:
-	if Input.is_action_just_pressed("left_click"):
+	if Input.is_action_just_pressed("spawn_bomb"):
 		spawn_bomb_box(get_global_mouse_position())
-	if Input.is_action_just_pressed("right_click"):
+	if Input.is_action_just_pressed("spawn_coins"):
 		spawn_coin_box(get_global_mouse_position())
 
 func spawn_bomb_box(pos: Vector2) -> void:
