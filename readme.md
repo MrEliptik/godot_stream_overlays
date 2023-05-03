@@ -55,12 +55,13 @@ I'm open to PR for fixes or improvements, and even new overlays if you want to!
 
 This project is distributed under the MIT license, check [LICENSE](LICENSE).
 
-Developped by me MrEliptik!
+Developed by me MrEliptik!
  
-- [Twitter](https://twitter.com/VicMeunier)
+- [Twitter](https://twitter.com/mreliptik)
 - [Twitch](https://twitch.tv/mreliptik)
 - [YouTube](https://www.youtube.com/c/MrEliptik)
 - [Discord](https://discord.gg/83nFRPTP6t)
+- [All links](https://bento.me/mreliptik)
 
 ### CONTRIBUTORS
 
