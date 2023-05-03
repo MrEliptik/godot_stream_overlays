@@ -28,6 +28,13 @@ func is_viewer_display_chat(username: String):
 			if u["display_chat"]: return true
 			return false
 	return false
+
+func is_viewer_showing_username(username: String):
+	for u in users:
+		if u["username"] == username:
+			if u["display_username"]: return true
+			return false
+	return false
 	
 func get_user_color(username: String):
 	for u in users:
@@ -42,14 +49,14 @@ func create_user(username: String, color: Color, join_overlay: bool, display_use
 	new_user["display_username"] = display_username
 	users.append(new_user)
 	
-func update_user(username: String, color, join_overlay: bool, display_username: bool):
+func update_user(username: String, color, join_overlay: bool, display_username):
 	for u in users:
 		if u["username"] == username:
 			if color:
 				u["color"] = color
 			if join_overlay:
 				u["join_overlay"] = join_overlay
-			if display_username:
+			if display_username != null:
 				u["display_username"] = display_username
 			return
 

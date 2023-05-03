@@ -37,7 +37,7 @@ func _physics_process(delta: float) -> void:
 	if not is_on_floor():
 		velocity.y += gravity
 
-	velocity = move_and_slide(velocity, Vector2.UP, true, 4, deg2rad(50), true)
+	velocity = move_and_slide_with_snap(velocity, Vector2.UP, Vector2.UP, true, 4, deg2rad(60), true)
 	
 func load_avatars():
 	var path = "res://visuals/avatars"
@@ -84,6 +84,10 @@ func set_username(username):
 func set_username_visibility(visibility: bool) -> void:
 	$GridContainer.visible = visibility
 
+func push(impulse: Vector2) -> void:
+	velocity += impulse * 0.1
+#	apply_central_impulse(impulse)
+
 func _on_Timer_timeout() -> void:
 	$Timer.start(rand_range(4, 10))
 	var new_dir = directions[int(rand_range(0, directions.size()))]
@@ -92,6 +96,7 @@ func _on_Timer_timeout() -> void:
 	else:
 		$AnimationPlayer.play("idle")
 	velocity.x = new_dir.x * speed
+#	linear_velocity.x = new_dir.x * speed * 4.0
 #	add_central_force(Vector2(new_dir.x * speed, 0))
 #	call_deferred("set_axis_velocity", Vector2(new_dir.x * speed, 0))
 

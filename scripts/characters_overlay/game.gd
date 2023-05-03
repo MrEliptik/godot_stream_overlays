@@ -48,7 +48,8 @@ func read_crendentials() -> Dictionary:
 
 func join_viewers(viewers: Array, display_username: bool = false) -> void:
 	# Spawn the viewer if not already present
-	if spawn_viewers(viewers, display_username) == 0:
+	var viewers_spawned: int = spawn_viewers(viewers, display_username)
+	if viewers_spawned == 0:
 		# Viewer is already present, show their username
 		var children = $Characters.get_children()
 		var viewer_names = []
@@ -56,6 +57,12 @@ func join_viewers(viewers: Array, display_username: bool = false) -> void:
 			viewer_names.append(child.username)
 			if child.username in viewers:
 				child.set_username_visibility(true)
+		
+		for viewer in viewers:
+			if not users.user_exist(viewer):
+				users.create_user(viewer, Color.white, true, display_username)
+			else:
+				users.update_user(viewer, null, true, display_username)
 				
 func leave_viewers(viewers: Array) -> void:
 	# Hide the username of the viewer
@@ -78,22 +85,25 @@ func spawn_viewers(viewers: Array, display_username: bool = false) -> int:
 		if "bot" in viewer: continue
 		if viewer in viewer_names: continue
 		var instance = character_scene.instance()
-		characters.call_deferred("add_child", instance)
-		yield(instance, "ready")
+#		characters.call_deferred("add_child", instance)
+#		yield(instance, "ready")
+		characters.add_child(instance)
 		instance.set_username(viewer)
-		instance.global_position = Vector2(rand_range(40, 1800), 1080/2)
+		instance.global_position = Vector2(rand_range(60, 1500), 1080/2)
 		instance.initial_pos = instance.global_position
-		instance.set_username_visibility(display_username)
 		
 		if bot_can_speak:
-			gift.chat(commands_list)
+#			gift.chat(commands_list)
+			bot_can_speak = false
 			$BotTimer.start()
 		
 		if not users.user_exist(viewer):
 			users.create_user(viewer, instance.color, true, display_username)
 		else:
 #			instance.set_color(users.get_user_color(viewer))
-			users.update_user(viewer, null, true, display_username)
+			users.update_user(viewer, null, true, null)
+		
+		instance.set_username_visibility(users.is_viewer_showing_username(viewer))
 		viewers_added += 1
 	users.save_users()
 	return viewers_added
