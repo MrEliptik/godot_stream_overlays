@@ -58,6 +58,10 @@ config/icon="res://icon.png"
 
 enable_audio_input=true
 
+[autoload]
+
+Globals="*res://autoload/globals.gd"
+
 [display]
 
 window/size/width=1920

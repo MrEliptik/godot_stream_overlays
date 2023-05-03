@@ -198,11 +198,13 @@ tracks/2/keys = {
 size = 20
 outline_size = 2
 outline_color = Color( 0.0745098, 0.0745098, 0.0745098, 1 )
+use_mipmaps = true
 use_filter = true
 font_data = ExtResource( 4 )
 
 [sub_resource type="StyleBoxFlat" id=10]
 content_margin_left = 5.0
+content_margin_right = 5.0
 bg_color = Color( 0.972549, 0.788235, 0.317647, 1 )
 corner_radius_top_left = 3
 corner_radius_top_right = 3
@@ -277,7 +279,7 @@ size_flags_vertical = 3
 columns = 2
 
 [node name="Lvl" type="Label" parent="GridContainer"]
-margin_right = 18.0
+margin_right = 23.0
 margin_bottom = 26.0
 grow_horizontal = 2
 theme = ExtResource( 2 )
@@ -292,8 +294,8 @@ __meta__ = {
 }
 
 [node name="Username" type="Label" parent="GridContainer"]
-margin_left = 22.0
-margin_right = 139.0
+margin_left = 27.0
+margin_right = 144.0
 margin_bottom = 26.0
 grow_horizontal = 2
 theme = ExtResource( 2 )

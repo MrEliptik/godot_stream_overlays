@@ -9,6 +9,9 @@ var min_speed := 0.0
 var velocity := Vector2.ZERO
 var username: String = ""
 var color: Color
+var level: int = 0.0
+var experience: float = 0.0
+var level_threshold: float = 2000.0
 
 var initial_pos: Vector2
 
@@ -69,10 +72,13 @@ func say(msg: String):
 func jump():
 	velocity.y = -jump_force
 	$AnimationPlayer.play("jump")
-	
+
+func set_level(level_val: int) -> void:
+	level = level_val
+	lvl_label.text = str(level_val)
+
 func set_speed(speed: float):
 	speed = clamp(speed, min_speed, max_speed)
-	print(speed)
 
 func set_color(color: Color):
 	$BasicAvatar.modulate = color
@@ -88,6 +94,15 @@ func set_username(username):
 	
 func set_username_visibility(visibility: bool) -> void:
 	$GridContainer.visible = visibility
+
+func add_xp(value) -> void:
+	experience += value
+	if experience > (level+1) * level_threshold:
+		level += 1
+		set_level(level)
+		jump()
+	Globals.users.update_user(username, null, true, $GridContainer.visible, level, experience)
+	Globals.users.save_users()
 
 func push(impulse: Vector2) -> void:
 	velocity += impulse * 0.1

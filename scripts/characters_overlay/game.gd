@@ -26,6 +26,7 @@ func _ready() -> void:
 #	get_twitch_viewers()
 
 	users.load_users()
+	Globals.users = users
 
 func read_crendentials() -> Dictionary:
 	var credentials = {"username": "", "oauth": ""}
@@ -84,6 +85,7 @@ func spawn_viewers(viewers: Array, display_username: bool = false) -> int:
 		var viewer: String = viewers[i]
 		if "bot" in viewer: continue
 		if viewer in viewer_names: continue
+		
 		var instance = character_scene.instance()
 #		characters.call_deferred("add_child", instance)
 #		yield(instance, "ready")
@@ -98,11 +100,13 @@ func spawn_viewers(viewers: Array, display_username: bool = false) -> int:
 			$BotTimer.start()
 		
 		if not users.user_exist(viewer):
-			users.create_user(viewer, instance.color, true, display_username)
+			users.create_user(viewer, instance.color, true, display_username, 0, 0.0)
 		else:
 #			instance.set_color(users.get_user_color(viewer))
 			users.update_user(viewer, null, true, null)
 		
+		instance.set_level(users.get_viewer_level(viewer))
+		instance.experience = users.get_viewer_experience(viewer)
 		instance.set_username_visibility(users.is_viewer_showing_username(viewer))
 		viewers_added += 1
 	users.save_users()
